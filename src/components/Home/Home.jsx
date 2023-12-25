@@ -19,15 +19,18 @@ const Home = () => {
   useEffect(() => {
     setStatus(STATUS.PENDING);
 
-    getPopularMovies()
-      .then(movies => {
+    const fetchMovies = async () => {
+      try {
+        const movies = await getPopularMovies();
         setPopularMovies(movies);
         setStatus(STATUS.RESOLVED);
-      })
-      .catch(() => {
+      } catch (error) {
         Notify.failure('Failed to load list of popular movies...');
         setStatus(STATUS.REJECTED);
-      });
+      }
+    };
+
+    fetchMovies();
   }, []);
 
   return (
