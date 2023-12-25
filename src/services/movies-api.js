@@ -10,3 +10,11 @@ export const getPopularMovies = async () => {
 
   return data.results;
 };
+
+export const getCurrentMovies = async value => {
+  const END_POINT = 'search/movie';
+
+  const { data } = await axios.get(`/${END_POINT}?api_key=${API_KEY}&query=${value}`);
+
+  return data.results;
+};

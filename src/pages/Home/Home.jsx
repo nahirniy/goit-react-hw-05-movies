@@ -1,7 +1,7 @@
 import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
 import { getPopularMovies } from 'services/movies-api';
-import MoviesList from './MoviesList/MoviesList';
+import MoviesList from '../../components/MoviesList/MoviesList';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
 
@@ -24,7 +24,7 @@ const Home = () => {
         const movies = await getPopularMovies();
         setPopularMovies(movies);
         setStatus(STATUS.RESOLVED);
-      } catch (error) {
+      } catch {
         Notify.failure('Failed to load list of popular movies...');
         setStatus(STATUS.REJECTED);
       }
