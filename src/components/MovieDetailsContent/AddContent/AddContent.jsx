@@ -1,6 +1,8 @@
 import { Link, Outlet } from 'react-router-dom';
 
 import css from './AddContent.module.css';
+import { Suspense } from 'react';
+import Loader from 'components/Loader/Loader';
 
 const AddContent = () => {
   return (
@@ -20,7 +22,9 @@ const AddContent = () => {
           </li>
         </ul>
       </div>
-      <Outlet />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 };

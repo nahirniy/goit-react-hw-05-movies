@@ -19,12 +19,12 @@ const MovieDetails = () => {
   const { movieId } = useParams();
 
   useEffect(() => {
-    setStatus(STATUS.PENDING);
-
     const fetchDetailsMovie = async () => {
-      const movie = await getDetailsMovie(movieId);
+      setStatus(STATUS.PENDING);
 
       try {
+        const movie = await getDetailsMovie(movieId);
+
         setDetailsMovie(movie);
         setStatus(STATUS.RESOLVED);
       } catch {

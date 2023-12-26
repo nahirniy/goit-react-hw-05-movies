@@ -6,6 +6,7 @@ import Searchbar from '../../components/Searchbar/Searchbar';
 import MoviesList from 'components/MoviesList/MoviesList';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
+import { useCustomContext } from 'components/Context/Context';
 
 const STATUS = {
   IDLE: 'idle',
@@ -15,9 +16,13 @@ const STATUS = {
 };
 
 const Movies = () => {
-  const [currentMovies, setCurrentMovies] = useState([]);
+  const { currentMovies, setCurrentMovies } = useCustomContext();
   const [value, setValue] = useState('');
   const [status, setStatus] = useState(STATUS.IDLE);
+
+  useEffect(() => {
+    currentMovies && setStatus(STATUS.RESOLVED);
+  }, [currentMovies]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -33,7 +38,7 @@ const Movies = () => {
     };
 
     if (value) fetchMovies();
-  }, [value]);
+  }, [value, setCurrentMovies]);
 
   const updateValues = newValue => {
     if (newValue === value) {

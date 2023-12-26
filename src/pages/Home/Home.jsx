@@ -4,6 +4,7 @@ import { getPopularMovies } from 'services/movies-api';
 import MoviesList from '../../components/MoviesList/MoviesList';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
+import { useCustomContext } from 'components/Context/Context';
 
 const STATUS = {
   IDLE: 'idle',
@@ -14,12 +15,16 @@ const STATUS = {
 
 const Home = () => {
   const [status, setStatus] = useState(STATUS.IDLE);
-  const [popularMovies, setPopularMovies] = useState([]);
+  const { popularMovies, setPopularMovies } = useCustomContext();
 
   useEffect(() => {
-    setStatus(STATUS.PENDING);
+    popularMovies && setStatus(STATUS.RESOLVED);
+  }, [popularMovies]);
 
+  useEffect(() => {
     const fetchMovies = async () => {
+      setStatus(STATUS.PENDING);
+
       try {
         const movies = await getPopularMovies();
         setPopularMovies(movies);
@@ -30,8 +35,8 @@ const Home = () => {
       }
     };
 
-    fetchMovies();
-  }, []);
+    if (!popularMovies.length) fetchMovies();
+  }, [popularMovies.length, setPopularMovies]);
 
   return (
     <>
