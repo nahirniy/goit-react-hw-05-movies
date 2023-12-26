@@ -1,10 +1,10 @@
 import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getDetailsMovie } from 'services/movies-api';
+import { getCurrentReviews } from 'services/movies-api';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
-import MovieDetailsContent from 'components/MovieDetailsContent/MovieDetailsContent';
+import ReviewList from './ReviewsList';
 
 const STATUS = {
   IDLE: 'idle',
@@ -13,19 +13,19 @@ const STATUS = {
   RESOLVED: 'resolved',
 };
 
-const MovieDetails = () => {
+const Reviews = () => {
   const [status, setStatus] = useState(STATUS.IDLE);
-  const [detailsMovie, setDetailsMovie] = useState({});
+  const [reviews, setReviews] = useState([]);
   const { movieId } = useParams();
 
   useEffect(() => {
     setStatus(STATUS.PENDING);
 
-    const fetchDetailsMovie = async () => {
-      const movie = await getDetailsMovie(movieId);
+    const fetchCast = async () => {
+      const reviews = await getCurrentReviews(movieId);
 
       try {
-        setDetailsMovie(movie);
+        setReviews(reviews);
         setStatus(STATUS.RESOLVED);
       } catch {
         Notify.failure('Oops something went wrong! Try reloading the page');
@@ -33,16 +33,16 @@ const MovieDetails = () => {
       }
     };
 
-    fetchDetailsMovie();
+    fetchCast();
   }, [movieId]);
 
   return (
     <>
-      {status === STATUS.RESOLVED && <MovieDetailsContent details={detailsMovie} />}
+      {status === STATUS.RESOLVED && <ReviewList reviews={reviews} />}
       {status === STATUS.PENDING && <Loader />}
-      {status === STATUS.REJECTED && <Error message="Load failed details of movie" />}
+      {status === STATUS.REJECTED && <Error message="Load failed reviews of movie" />}
     </>
   );
 };
 
-export default MovieDetails;
+export default Reviews;

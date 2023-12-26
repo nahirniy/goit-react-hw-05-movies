@@ -1,0 +1,16 @@
+.review_title {
+  font-size: 34px;
+  margin-top: 30px;
+  color: rgb(183, 12, 12);
+}
+
+.review_list {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.review_name {
+  margin-bottom: 15px;
+}

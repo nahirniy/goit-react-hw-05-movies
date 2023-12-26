@@ -2,7 +2,7 @@ import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
 
 import { getCurrentMovies } from 'services/movies-api';
-import Searchbar from './Searchbar/Searchbar';
+import Searchbar from '../../components/Searchbar/Searchbar';
 import MoviesList from 'components/MoviesList/MoviesList';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
