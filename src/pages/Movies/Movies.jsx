@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { getCurrentMovies } from 'services/movies-api';
 import Searchbar from './Searchbar/Searchbar';
 import MoviesList from 'components/MoviesList/MoviesList';
+import Loader from 'components/Loader/Loader';
+import Error from 'components/Error/Error';
 
 const STATUS = {
   IDLE: 'idle',
@@ -41,13 +43,14 @@ const Movies = () => {
 
     setValue(newValue);
     setStatus(STATUS.PENDING);
-    console.log(status);
   };
 
   return (
     <>
       <Searchbar onSubmit={updateValues} />
-      <MoviesList movies={currentMovies} />
+      {status === STATUS.RESOLVED && <MoviesList movies={currentMovies} />}
+      {status === STATUS.PENDING && <Loader />}
+      {status === STATUS.REJECTED && <Error message="Load failed your movies" />}
     </>
   );
 };

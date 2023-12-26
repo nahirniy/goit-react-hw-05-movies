@@ -1,0 +1,12 @@
+.container {
+  max-width: 100% - 64px;
+  margin: 0 auto;
+}
+
+.movie_list {
+  display: flex;
+  gap: 30px;
+  list-style: none;
+  flex-wrap: wrap;
+  justify-content: center;
+}

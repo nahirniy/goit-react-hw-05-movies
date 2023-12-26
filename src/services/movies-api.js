@@ -18,3 +18,11 @@ export const getCurrentMovies = async value => {
 
   return data.results;
 };
+
+export const getDetailsMovie = async id => {
+  const END_POINT = 'movie';
+
+  const { data } = await axios.get(`/${END_POINT}/${id}?api_key=${API_KEY}`);
+
+  return data;
+};
