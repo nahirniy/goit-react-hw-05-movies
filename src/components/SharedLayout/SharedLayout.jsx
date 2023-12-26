@@ -1,11 +1,14 @@
 import Header from 'components/Header/Header';
+import Section from 'components/Section/Section';
 import { Outlet } from 'react-router-dom';
 
 const SharedLayout = () => {
   return (
     <>
       <Header />
-      <Outlet />
+      <Section>
+        <Outlet />
+      </Section>
     </>
   );
 };

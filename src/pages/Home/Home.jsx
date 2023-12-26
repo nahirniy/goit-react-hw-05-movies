@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <>
-      {status === STATUS.RESOLVED && <MoviesList movies={popularMovies} />}
+      {status === STATUS.RESOLVED && <MoviesList movies={popularMovies} page="home" />}
       {status === STATUS.PENDING && <Loader />}
       {status === STATUS.REJECTED && <Error message="Load failed trend movies" />}
     </>

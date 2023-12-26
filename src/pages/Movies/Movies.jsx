@@ -48,7 +48,7 @@ const Movies = () => {
   return (
     <>
       <Searchbar onSubmit={updateValues} />
-      {status === STATUS.RESOLVED && <MoviesList movies={currentMovies} />}
+      {status === STATUS.RESOLVED && <MoviesList movies={currentMovies} page="movie" />}
       {status === STATUS.PENDING && <Loader />}
       {status === STATUS.REJECTED && <Error message="Load failed your movies" />}
     </>

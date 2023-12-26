@@ -1,6 +1,7 @@
 .container {
   max-width: 100% - 64px;
   margin: 0 auto;
+  margin-top: 20px;
 }
 
 .movie_list {
@@ -10,4 +11,10 @@
   flex-wrap: wrap;
   justify-content: center;
   padding: 40px 0;
+}
+
+.movie_title {
+  text-align: center;
+  font-size: 34px;
+  color: rgb(32, 31, 31);
 }

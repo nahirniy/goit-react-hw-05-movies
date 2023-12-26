@@ -4,9 +4,9 @@ import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDetailsMovie } from 'services/movies-api';
-import MovieDetailsCart from './MovieDetailsCart/MovieDetailsCart';
 import Loader from 'components/Loader/Loader';
 import Error from 'components/Error/Error';
+import MovieDetailsCard from './MovieDetailsCard/MovieDetailsCard';
 
 const STATUS = {
   IDLE: 'idle',
@@ -40,7 +40,7 @@ const MovieDetails = () => {
 
   return (
     <>
-      {status === STATUS.RESOLVED && <MovieDetailsCart details={detailsMovie} />}
+      {status === STATUS.RESOLVED && <MovieDetailsCard details={detailsMovie} />}
       {status === STATUS.PENDING && <Loader />}
       {status === STATUS.REJECTED && <Error message="Load failed details of movie" />}
     </>
