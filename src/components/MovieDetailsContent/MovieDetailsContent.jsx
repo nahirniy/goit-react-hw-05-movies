@@ -1,6 +1,8 @@
 import GoBackBtn from 'components/GoBackBtn/GoBackBtn';
 import CardContent from './CardContent/CardContent';
 import AddContent from './AddContent/AddContent';
+import { Suspense } from 'react';
+import Loader from 'components/Loader/Loader';
 // import css from './MovieDetailsCart.module.css';
 
 const MovieDetailsContent = ({ details }) => {
@@ -9,11 +11,11 @@ const MovieDetailsContent = ({ details }) => {
   const image = 'https://image.tmdb.org/t/p/w500' + poster_path;
 
   return (
-    <>
+    <Suspense fallback={<Loader />}>
       <GoBackBtn />
       <CardContent movieData={{ title, userRate, overview, genres, image }} />
       <AddContent />
-    </>
+    </Suspense>
   );
 };
 
