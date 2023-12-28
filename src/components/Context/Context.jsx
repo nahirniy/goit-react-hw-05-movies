@@ -7,16 +7,16 @@ export const useCustomContext = () => {
 };
 
 const Context = ({ children }) => {
-  const [currentMovies, setCurrentMovies] = useState([]);
+  const [value, setValue] = useState('');
   const [popularMovies, setPopularMovies] = useState([]);
 
   return (
     <ContextAlert.Provider
       value={{
+        value: value,
+        setValue: setValue,
         popularMovies: popularMovies,
         setPopularMovies: setPopularMovies,
-        currentMovies: currentMovies,
-        setCurrentMovies: setCurrentMovies,
       }}
     >
       {children}

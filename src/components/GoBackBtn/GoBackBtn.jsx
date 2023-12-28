@@ -1,15 +1,14 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import css from './GoBackBtn.module.css';
 
 export const GoBackBtn = () => {
-  const navigate = useNavigate();
-
-  const goBack = () => navigate(-1);
+  const location = useLocation();
+  const comeBack = location.state.from ?? '/';
 
   return (
-    <button onClick={goBack} className={css.movie_goback_btn}>
+    <Link to={comeBack} className={css.movie_goback_btn}>
       Go back
-    </button>
+    </Link>
   );
 };
 

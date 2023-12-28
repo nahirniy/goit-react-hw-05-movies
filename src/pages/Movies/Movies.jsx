@@ -1,5 +1,6 @@
 import { Notify } from 'notiflix';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { getCurrentMovies } from 'services/movies-api';
 import Searchbar from '../../components/Searchbar/Searchbar';
@@ -16,19 +17,28 @@ const STATUS = {
 };
 
 const Movies = () => {
-  const { currentMovies, setCurrentMovies } = useCustomContext();
-  const [value, setValue] = useState('');
   const [status, setStatus] = useState(STATUS.IDLE);
+  const [currentMovies, setCurrentMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { value, setValue } = useCustomContext();
 
   useEffect(() => {
-    currentMovies && setStatus(STATUS.RESOLVED);
-  }, [currentMovies]);
+    const queryValue = searchParams.get('query') ?? value;
+
+    value ? setSearchParams({ query: value }) : setValue(queryValue);
+  }, [searchParams, setValue, value, setSearchParams]);
 
   useEffect(() => {
+    if (!value) {
+      return;
+    }
+
     const fetchMovies = async () => {
-      const movies = await getCurrentMovies(value);
+      setStatus(STATUS.PENDING);
 
       try {
+        const movies = await getCurrentMovies(value);
+
         setCurrentMovies(movies);
         setStatus(STATUS.RESOLVED);
       } catch {
@@ -37,22 +47,12 @@ const Movies = () => {
       }
     };
 
-    if (value) fetchMovies();
-  }, [value, setCurrentMovies]);
-
-  const updateValues = newValue => {
-    if (newValue === value) {
-      Notify.info('You have to write new keyword...Try again!');
-      return;
-    }
-
-    setValue(newValue);
-    setStatus(STATUS.PENDING);
-  };
+    fetchMovies();
+  }, [value]);
 
   return (
     <>
-      <Searchbar onSubmit={updateValues} />
+      {(status === STATUS.RESOLVED || status === STATUS.IDLE) && <Searchbar />}
       {status === STATUS.RESOLVED && <MoviesList movies={currentMovies} page="movie" />}
       {status === STATUS.PENDING && <Loader />}
       {status === STATUS.REJECTED && <Error message="Load failed your movies" />}

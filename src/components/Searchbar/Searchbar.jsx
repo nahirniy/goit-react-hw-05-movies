@@ -2,24 +2,31 @@ import { Formik, Field, Form } from 'formik';
 import { Notify } from 'notiflix';
 import { BiSearchAlt } from 'react-icons/bi';
 import css from './Searchbar.module.css';
+import { useCustomContext } from 'components/Context/Context';
 
-const Searchbar = ({ onSubmit }) => {
-  const handleSubmit = ({ query }, action) => {
-    if (!query) {
+const Searchbar = () => {
+  const { value, setValue } = useCustomContext();
+
+  const handleSubmit = ({ newValue }) => {
+    if (!newValue) {
       return Notify.failure('You have to write something here for a successful search');
     }
 
-    onSubmit(query);
-    action.resetForm();
+    if (newValue === value) {
+      Notify.info('You have to write new keyword...Try again!');
+      return;
+    }
+
+    setValue(newValue);
   };
 
   return (
-    <Formik initialValues={{ query: '' }} onSubmit={handleSubmit}>
+    <Formik initialValues={{ newValue: value }} onSubmit={handleSubmit}>
       <Form className={css.form}>
         <div className={css.input_wrap}>
           <Field
             className={css.input}
-            name="query"
+            name="newValue"
             type="text"
             placeholder="Search movies..."
           />
