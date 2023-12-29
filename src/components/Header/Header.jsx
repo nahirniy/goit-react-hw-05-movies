@@ -7,10 +7,20 @@ const Header = () => {
     <header className={css.header}>
       <div className={css.header_container}>
         <nav className={css.navigation_list}>
-          <NavLink className={css.header_link} to="/">
+          <NavLink
+            className={({ isActive }) =>
+              `${css.header_link} ${isActive ? css.active : ''}`
+            }
+            to="/"
+          >
             Home
           </NavLink>
-          <NavLink className={css.header_link} to="/movies">
+          <NavLink
+            className={({ isActive }) =>
+              `${css.header_link} ${isActive ? css.active : ''}`
+            }
+            to="/movies"
+          >
             Movies
           </NavLink>
         </nav>
