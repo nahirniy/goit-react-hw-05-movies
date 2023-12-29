@@ -23,7 +23,7 @@ const Movies = () => {
   const { value, setValue } = useCustomContext();
 
   useEffect(() => {
-    const queryValue = searchParams.get('query') ?? value;
+    const queryValue = searchParams.get('query') ?? '';
 
     value ? setSearchParams({ query: value }) : setValue(queryValue);
   }, [searchParams, setValue, value, setSearchParams]);
